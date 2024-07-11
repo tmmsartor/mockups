@@ -1,4 +1,4 @@
-#include "madnlp.h"
+#include "MadnlpCInterface.h"
 
 MADNLP_SYMBOL_EXPORT void madnlp_c_startup(int, char**) { }
 MADNLP_SYMBOL_EXPORT struct MadnlpCSolver* madnlp_c_create(struct MadnlpCInterface* nlp_interface) { return 0; }
