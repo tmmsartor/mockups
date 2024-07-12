@@ -27,66 +27,70 @@ extern "C" {
 #define madnlp_real double
 
 // structs
-struct MadnlpCSolver;
 struct MadnlpCStats;
 struct MadnlpCDims;
 struct MadnlpCInterface;
 
+// Opaque types
+typedef struct MadnlpCSolver MadnlpCSolver;
+
 // function pointer types
-typedef madnlp_int (*MadnlpCGetDim)(void* user_data);
-typedef madnlp_int (*MadnlpCGetDouble)(double*, void* user_data);
-
-typedef madnlp_int (*MadnlpCFullEvalObj)(const double*, double *, void*);
-typedef madnlp_int (*MadnlpCFullEvalConstr)(const double*, double *, void*);
-typedef madnlp_int (*MadnlpCFullEvalObjGrad)(const double*, double*, void*);
-typedef madnlp_int (*MadnlpCFullEvalConstrJac)(const double*, double*, void*);
-typedef madnlp_int (*MadnlpCFullEvalLagHess)(double, const double*, const double*, double*, void*);
-
-
-struct MadnlpCDims { 
-  size_t nw;
-  size_t nc;
-};
+typedef madnlp_int (*MadnlpCEvalObj)(const double*, double *, void*);
+typedef madnlp_int (*MadnlpCEvalConstr)(const double*, double *, void*);
+typedef madnlp_int (*MadnlpCEvalObjGrad)(const double*, double*, void*);
+typedef madnlp_int (*MadnlpCEvalConstrJac)(const double*, double*, void*);
+typedef madnlp_int (*MadnlpCEvalLagHess)(double, const double*, const double*, double*, void*);
 
 struct MadnlpCStats {
-  double compute_sd_time;
-  double duinf_time;
-  double eval_hess_time;
-  double eval_jac_time;
-  double eval_cv_time;
-  double eval_grad_time;
-  double eval_obj_time;
-  double initialization_time;
-  double time_total;
-  int eval_hess_count;
-  int eval_jac_count;
-  int eval_cv_count;
-  int eval_grad_count;
-  int eval_obj_count;
-  int iterations_count;
-  int return_flag;
+  madnlp_int iter;
 };
 
 struct MadnlpCInterface {
-  /// @brief number of variables
-  MadnlpCGetDim get_nw;
-  /// @brief number of equality constraints
-  MadnlpCGetDim get_nc;
+  MadnlpCEvalObj eval_obj;
+  MadnlpCEvalConstr eval_constr;
+  MadnlpCEvalObjGrad eval_obj_grad;
+  MadnlpCEvalConstrJac eval_constr_jac;
+  MadnlpCEvalLagHess eval_lag_hess;
 
-  MadnlpCFullEvalLagHess full_eval_lag_hess;
-  MadnlpCFullEvalConstrJac full_eval_constr_jac;
-  MadnlpCFullEvalConstr full_eval_constr;
-  MadnlpCFullEvalObjGrad full_eval_obj_grad;
-  MadnlpCFullEvalObj full_eval_obj;
+  /// @brief number of variables
+  size_t nw;
+  /// @brief number of equality constraints
+  size_t nc;
+
+  size_t* nzj_i; // 1-based
+  size_t* nzj_j;
+  size_t* nzh_i;
+  size_t* nzh_j;
+
+  size_t nnzj;
+  size_t nnzh;
+  size_t nnzo;
 
   void* user_data;
 };
 
+struct MadnlpCNumericIn {
+  const double* x0;
+  const double* l0;
+  const double* ubx;
+  const double* lbx;
+  const double* ubg;
+  const double* lbg;
+};
+
+struct MadnlpCNumericOut {
+  double* sol;
+  double* con;
+  double* obj;
+  double* mul;
+  double* mul_L;
+  double* mul_U;
+
+};
+
 MADNLP_SYMBOL_EXPORT void madnlp_c_startup(int, char**);
 MADNLP_SYMBOL_EXPORT struct MadnlpCSolver* madnlp_c_create(struct MadnlpCInterface* nlp_interface);
-MADNLP_SYMBOL_EXPORT void madnlp_c_init(struct MadnlpCSolver* s);
-MADNLP_SYMBOL_EXPORT void madnlp_c_update_cco_indexes(struct MadnlpCSolver* s);
-MADNLP_SYMBOL_EXPORT madnlp_int madnlp_c_solve(struct MadnlpCSolver*);
+MADNLP_SYMBOL_EXPORT madnlp_int madnlp_c_solve(struct MadnlpCSolver*, struct MadnlpCNumericIn* in, struct MadnlpCNumericOut* out);
 
 /* -1 for not found, 0 for double, 1 for int, 2 for bool, 3 for string */
 MADNLP_SYMBOL_EXPORT int madnlp_c_option_type(const char* name);
@@ -95,7 +99,6 @@ MADNLP_SYMBOL_EXPORT int madnlp_c_set_option_bool(struct MadnlpCSolver* s, const
 MADNLP_SYMBOL_EXPORT int madnlp_c_set_option_int(struct MadnlpCSolver* s, const char* name, int val);
 MADNLP_SYMBOL_EXPORT int madnlp_c_set_option_string(struct MadnlpCSolver* s, const char* name, const char* val);
 
-MADNLP_SYMBOL_EXPORT const struct MadnlpCDims* madnlp_c_get_dims(struct MadnlpCSolver* s);
 MADNLP_SYMBOL_EXPORT const struct MadnlpCStats* madnlp_c_get_stats(struct MadnlpCSolver* s);
 MADNLP_SYMBOL_EXPORT void madnlp_c_destroy(struct MadnlpCSolver*);
 MADNLP_SYMBOL_EXPORT void madnlp_c_shutdown(void);
