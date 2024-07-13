@@ -12,7 +12,7 @@ endif()
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-add_library(madnlp SHARED src/madnlp.cpp include/MadnlpCInterface.h)
+add_library(madnlp SHARED src/madnlp.cpp include/madnlp_c.h)
 
 if(WIN32)
   set_target_properties(madnlp PROPERTIES PREFIX "" IMPORT_PREFIX "")
