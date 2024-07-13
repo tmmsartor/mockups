@@ -3,8 +3,8 @@
 MADNLP_SYMBOL_EXPORT struct MadnlpCSolver* madnlp_c_create(struct MadnlpCInterface* nlp_interface) { return 0; }
 MADNLP_SYMBOL_EXPORT void madnlp_c_init(struct MadnlpCSolver* s) { }
 MADNLP_SYMBOL_EXPORT madnlp_int madnlp_c_solve(struct MadnlpCSolver* s) { return 0; }
-MADNLP_SYMBOL_EXPORT struct MadnlpCNumericIn* madnlp_c_input(struct MadnlpCSolver* s) { return 0; }
-MADNLP_SYMBOL_EXPORT struct MadnlpCNumericOut* madnlp_c_output(struct MadnlpCSolver* s) { return 0; }
+MADNLP_SYMBOL_EXPORT const struct MadnlpCNumericIn* madnlp_c_input(struct MadnlpCSolver* s) { return 0; }
+MADNLP_SYMBOL_EXPORT const struct MadnlpCNumericOut* madnlp_c_output(struct MadnlpCSolver* s) { return 0; }
 
 /* -1 for not found, 0 for double, 1 for int, 2 for bool, 3 for string */
 MADNLP_SYMBOL_EXPORT int madnlp_c_option_type(const char* name) { return 0; }
