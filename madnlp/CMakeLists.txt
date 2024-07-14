@@ -12,10 +12,10 @@ endif()
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-add_library(madnlp SHARED src/madnlp.cpp include/madnlp_c.h)
+add_library(madnlp_c SHARED src/madnlp.cpp include/madnlp_c.h)
 
 if(WIN32)
-  set_target_properties(madnlp PROPERTIES PREFIX "" IMPORT_PREFIX "")
+  set_target_properties(madnlp_c PROPERTIES PREFIX "" IMPORT_PREFIX "")
 endif()
 
 if(CMAKE_SIZEOF_VOID_P EQUAL 4)
@@ -36,13 +36,13 @@ elseif(${CMAKE_GENERATOR} MATCHES "MSYS Makefiles")
 endif()
 
 
-install(TARGETS madnlp EXPORT madnlpTargets
+install(TARGETS madnlp_c EXPORT madnlpTargets
   LIBRARY DESTINATION ${INSTALL_PREFIX}lib
   ARCHIVE DESTINATION ${INSTALL_PREFIX}lib
   RUNTIME DESTINATION ${INSTALL_PREFIX}bin
   INCLUDES DESTINATION ${INSTALL_PREFIX}include)
 
-target_include_directories(madnlp PUBLIC
+target_include_directories(madnlp_c PUBLIC
   $<BUILD_INTERFACE:${madnlp_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:${INSTALL_PREFIX}include>
 )
