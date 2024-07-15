@@ -81,12 +81,13 @@ struct MadnlpCNumericOut {
   const double* mul;
   const double* mul_L;
   const double* mul_U;
-  const double* primal_feas;
-  const double* dual_feas;
 };
 
 struct MadnlpCStats {
-  const madnlp_int* iter;
+  const madnlp_int iter;
+  const madnlp_int status;
+  const double dual_feas;
+  const double primal_feas;
 };
 
 MADNLP_SYMBOL_EXPORT struct MadnlpCSolver* madnlp_c_create(struct MadnlpCInterface* nlp_interface);
