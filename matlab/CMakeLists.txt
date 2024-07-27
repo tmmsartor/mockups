@@ -21,7 +21,7 @@ set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 add_library(mex SHARED src/mex.cpp include/mex.h include/mex_versions.h)
 add_library(mx SHARED src/mx.cpp include/mex.h include/matrix.h include/matrix_versions.h)
 add_library(ut SHARED src/ut.cpp)
-add_library(eng SHARED src/eng.cpp)
+add_library(eng SHARED src/eng.cpp include/engine.h include/eng_Export.h)
 
 if (NOT MATLAB_API_VERSION)
   set(MATLAB_API_VERSION 800)
@@ -106,6 +106,11 @@ install(TARGETS matlab EXPORT matlabTargets
 target_include_directories(mex PUBLIC
   $<BUILD_INTERFACE:${matlab_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:${INSTALL_PREFIX}include>
+)
+
+target_include_directories(eng PUBLIC
+  $<BUILD_INTERFACE:${matlab_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
 )
 
 target_include_directories(mx PUBLIC
