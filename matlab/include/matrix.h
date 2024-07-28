@@ -50,7 +50,7 @@ typedef enum {
 } mxClassID;
 
 typedef bool mxLogical;
-typedef char16_t mxChar;
+typedef uint16_t mxChar;
 
 #include <matrix_versions.h>
 
