@@ -7,7 +7,6 @@
 extern "C" {
 #endif
 
-  typedef struct mxArray_tag mxArray;
   typedef struct engine Engine;
 
   int engEvalString(Engine *, const char *);
