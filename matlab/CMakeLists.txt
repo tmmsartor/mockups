@@ -110,7 +110,7 @@ target_include_directories(mex PUBLIC
 
 target_include_directories(eng PUBLIC
   $<BUILD_INTERFACE:${matlab_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
+  $<INSTALL_INTERFACE:${INSTALL_PREFIX}include>
 )
 
 target_include_directories(mx PUBLIC
