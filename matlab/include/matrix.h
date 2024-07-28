@@ -2,6 +2,10 @@
 #define matrix_H
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
 #define int8_T int8_t
@@ -15,6 +19,9 @@
 
 #include <stdlib.h>
 #include <stddef.h>
+
+typedef struct mxArray_tag mxArray;
+
 typedef size_t mwSize;
 typedef size_t mwIndex;
 typedef enum { mxREAL, mxCOMPLEX } mxComplexity;
@@ -94,5 +101,9 @@ void mxSetField(mxArray *, mwIndex, const char *, mxArray *);
 void mxSetProperty(mxArray *, mwIndex, const char *, const mxArray *);
 void mxSetFieldByNumber(mxArray *, mwIndex, int, mxArray *);
 mxArray* mxCreateCharArray(mwSize, const mwSize *);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // matrix_H

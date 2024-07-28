@@ -6,9 +6,6 @@
 extern "C" {
 #endif
 
-  typedef struct mxArray_tag mxArray;
-
-
   #include <matrix.h>
 
   #include <mex_versions.h>

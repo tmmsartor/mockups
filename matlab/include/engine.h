@@ -1,6 +1,8 @@
 #ifndef engine_H
 #define engine_H
 
+#include "matrix.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
