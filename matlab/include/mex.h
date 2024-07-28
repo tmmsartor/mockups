@@ -2,8 +2,10 @@
 #define mex_H
 
 
-extern "C"
-{
+#ifdef __cplusplus
+extern "C" {
+#endif
+
   typedef struct mxArray_tag mxArray;
 
 
@@ -22,6 +24,8 @@ void mexLock(void);
 int mexAtExit(void (*)(void));
 void mexMakeArrayPersistent(mxArray *);
 
+#ifdef __cplusplus
 }
+#endif
 
 #endif // mex_H

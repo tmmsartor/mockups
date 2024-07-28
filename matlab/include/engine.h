@@ -1,8 +1,10 @@
 #ifndef engine_H
 #define engine_H
 
-extern "C"
-{
+#ifdef __cplusplus
+extern "C" {
+#endif
+
   typedef struct mxArray_tag mxArray;
   typedef struct engine Engine;
 
@@ -14,6 +16,8 @@ extern "C"
   int engPutVariable(Engine *, const char *, const mxArray *);
   int engOutputBuffer(Engine *, char *, int);
 
+#ifdef __cplusplus
 }
+#endif
 
 #endif // engine_H
