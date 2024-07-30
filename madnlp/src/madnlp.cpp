@@ -1,5 +1,8 @@
 #include "madnlp_c.h"
 
+MADNLP_SYMBOL_EXPORT int init_julia(int argc, char** argv) { return 0; }
+MADNLP_SYMBOL_EXPORT void shutdown_julia(int code) { }
+
 MADNLP_SYMBOL_EXPORT struct MadnlpCSolver* madnlp_c_create(struct MadnlpCInterface* nlp_interface) { return 0; }
 MADNLP_SYMBOL_EXPORT void madnlp_c_init(struct MadnlpCSolver* s) { }
 MADNLP_SYMBOL_EXPORT int madnlp_c_solve(struct MadnlpCSolver* s) { return 0; }
